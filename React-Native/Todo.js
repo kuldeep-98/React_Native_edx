@@ -1,9 +1,20 @@
 import React from "react"
-import {View, Button, Text, ScrollView} from 'react-native'
+import {View, Button, Text, ScrollView, StyleSheet} from 'react-native'
+import  Constants   from 'expo-constants'
 
 let id = 0;
+
+const styles = StyleSheet.create({
+  todoContainer:{
+    flexDirection:"row",
+    alignItems:"center",
+  },
+  appContainer:{
+    paddingTop: Constants.statusBarHeight
+  },
+});
 const Todo = props => (
-  <View>
+  <View style={styles.todoContainer}>
     <Text>{props.todo.text}</Text>
     <Button onPress={props.removeTodo} title="delete" />
   </View>
@@ -42,7 +53,7 @@ export default class App extends React.Component {
   }
   render() {
     return (
-      <View>
+      <View style={styles.appContainer}>
         <Text>Todo count: {this.state.todos.length}</Text>
         <Text>
           Unchecked todo count:{" "}
