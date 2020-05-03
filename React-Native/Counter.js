@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class App extends React.Component {
+class Counter extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -22,10 +22,15 @@ export default class App extends React.Component {
   }
 
   componentDidMount(){
-    setInterval(this.inc,1000)
+    this.interval = setInterval(this.inc,1000)
+  }
+
+  componentWillUnmount(){
+    clearInterval(this.interval)
   }
 
   inc = () => {
+    console.log('ff')
     this.setState(prevState => ({
       count: prevState.count + 1
     }))
@@ -37,5 +42,33 @@ export default class App extends React.Component {
        <Text style={styles.count}>{this.state.count}</Text>
       </View>
     );
+  }
+}
+
+export default class App extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      showCounter: true
+    }
+  }
+
+  toggleCounter = () => this.setState(prevState => ({
+    showCounter: !prevState.showCounter,
+  }))
+
+  render(){
+    if(this.state.showCounter){
+    return(
+      <View style={styles.appContainer}>
+        <Button title="toggle" onPress={this.toggleCounter} />
+        <Counter />
+      </View>
+    )
+  }else {
+    return(
+    <Button title="toggle" onPress={this.toggleCounter} />
+    )
+  }
   }
 }
