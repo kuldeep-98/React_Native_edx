@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, View, StyleSheet, ScrollView, Text,FlatList } from 'react-native';
 import Constants from 'expo-constants';
-import contacts from './Contacts';
+import contacts, { compareNames } from './Contacts';
 import Row from './Row'
 const styles = StyleSheet.create({
   container: {
@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
 export default class App extends React.Component {
   state = {
     showContacts: false,
+    contacts: contacts
   };
 
   toggleContacts = () => {
@@ -22,15 +23,22 @@ export default class App extends React.Component {
     }));
   };
 
+  sort = () => {
+    this.setState(prevState => ({
+      contacts: [...prevState.contacts].sort(compareNames),
+    }))
+  }
+
   renderItem = obj => <Row {...(obj.item)}/>
 
   render() {
     return (
       <View style={styles.container}>
         <Button onPress={this.toggleContacts} title="toggle contacts" />
+        <Button onPress={this.sort} title="sort" />
         {this.state.showContacts && (<FlatList 
-          renderItem = {obj =>  <Row {...(obj.item)}/>}
-          data = {contacts}
+          renderItem = {this.renderItem}
+          data = {this.state.contacts}
         />)}
         {/*<ScrollView>
           {this.state.showContacts &&
