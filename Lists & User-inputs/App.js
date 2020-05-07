@@ -2,7 +2,8 @@ import React from 'react';
 import { Button, View, StyleSheet, ScrollView, Text,FlatList } from 'react-native';
 import Constants from 'expo-constants';
 import contacts, { compareNames } from './Contacts';
-import Row from './Row'
+import ContactsList from './ContactsList';
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -29,17 +30,18 @@ export default class App extends React.Component {
     }))
   }
 
-  renderItem = obj => <Row {...(obj.item)}/>
+  // renderItem = obj => <Row {...(obj.item)}/>
 
   render() {
     return (
       <View style={styles.container}>
         <Button onPress={this.toggleContacts} title="toggle contacts" />
         <Button onPress={this.sort} title="sort" />
-        {this.state.showContacts && (<FlatList 
+        {this.state.showContacts && (<ContactsList />)}
+        {/*this.state.showContacts && (<FlatList 
           renderItem = {this.renderItem}
           data = {this.state.contacts}
-        />)}
+        />)*/}
         {/*<ScrollView>
           {this.state.showContacts &&
             contacts.map(contact => <Row {...contact} />)}
