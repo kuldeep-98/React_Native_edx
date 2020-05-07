@@ -1,8 +1,10 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
-  row:{padding:20},
+  row:{
+    padding:20
+  },
 })
 
 const Row = ({ name, phone }) => (
